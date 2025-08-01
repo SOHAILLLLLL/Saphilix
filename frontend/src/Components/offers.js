@@ -181,7 +181,7 @@ const Cosmetic3DCarousel = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-rose-50 via-pink-50 to-purple-50 flex items-center justify-center p-4 md:p-8">
+    <div className="min-h-screen bg-gradient-to-br from-[#D3B7DF]  to-purple-50 flex items-center justify-center p-4 md:p-8">
       <div className="relative w-full max-w-6xl">
         {/* Title */}
         <div className="text-center mb-8">
