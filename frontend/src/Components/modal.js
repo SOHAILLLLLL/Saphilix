@@ -16,7 +16,7 @@ const AddToCartModal = ({ isOpen, onClose, product = {}, setCartItems }) => {
     //MAIN
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL || "http://10.98.119.194:8000"}/storedata/add-to-cart`,
+        `${process.env.REACT_APP_API_URL}/storedata/add-to-cart`,
         {
           method: "POST",
           headers: {

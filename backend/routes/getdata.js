@@ -111,7 +111,7 @@ router.get('/get-cart', async (req, res) => {
         }
 
         return {
-          productId: item._id,
+          productId: item.productId,
           name: productFromDb.name,        // From CartItem
           price: productFromDb.price,      // From CartItem
           photo: productFromDb.photo, // From Product model (assuming it's not in CartItem)

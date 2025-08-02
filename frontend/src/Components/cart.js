@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 // import {  } from 'react';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-const API_URL = process.env.REACT_APP_API_URL || 'http://10.98.119.194:8000';
+const API_URL = process.env.REACT_APP_API_URL; // Use environment variable or default to localhost
 const ShoppingCart = (props) => {
   const [cartItems, setCartItems] = useState([])
   const [d, setD] = useState(0);
@@ -33,7 +33,7 @@ const ShoppingCart = (props) => {
 
       // 3. Redirect the user to the first checkout step (Shipping Information)
       // Pass the checkoutSessionId as a URL query parameter
-      
+
       const data = await response.json();
       console.log('Validated Cart Data:', data.cart);
       props.setCartItems(data.cart)
@@ -74,23 +74,25 @@ const ShoppingCart = (props) => {
   }, [d]);
 
 
-  const updateQuantity = async (id, newQuantity) => {
+  const updateQuantity = async (id, q) => {
     try {
-      const response = await fetch(`http://10.98.119.194:8000/storedata/remove/${id}`, {
-        method: 'DELETE',
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/storedata/update-quantity/${id}`, {
+        method: 'PATCH',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          // Pass the cartId in a custom header
+          
         },
-        credentials: 'include' // Important: Send cookies
+        body: JSON.stringify({ newQuantity: q }),
       });
 
       if (!response.ok) throw new Error('Failed to remove item');
-      if (newQuantity <= 0) {
+      if (q <= 0) {
         removeItem(id);
         return;
       }
       const updatedItems = cartItems.map(item =>
-        item.productId === id ? { ...item, quantity: newQuantity } : item
+        item.productId === id ? { ...item, quantity: q } : item
       );
       setCartItems(updatedItems);
 
@@ -103,14 +105,13 @@ const ShoppingCart = (props) => {
 
   const removeItem = async (id) => {
     try {
-      console.log(id+"bro is herre")
-      const response = await fetch(`${API_URL}/storedata/remove/${id}`, {
-        method: 'POST',
+      console.log(id + "bro is herre")
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/storedata/remove/${id}`, {
+        method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
         },
         credentials: 'include',
-        body: JSON.stringify({ id }),
       });
 
       if (!response.ok) throw new Error('Failed to remove item');
@@ -225,9 +226,10 @@ const ShoppingCart = (props) => {
                           </button>
                         </div>
                         <button
-                          onClick={() =>{
-                            console.log(item.productId+"npothing");
-                            removeItem(item.productId);}}
+                          onClick={() => {
+                            console.log(item.productId + "npothing");
+                            removeItem(item.productId);
+                          }}
                           className="text-red-500 hover:text-red-700 flex items-center gap-1 text-sm font-medium"
                         >
                           <Trash2 className="h-4 w-3" /> Remove
@@ -270,10 +272,10 @@ const ShoppingCart = (props) => {
               </div>
             </div>
             <Link to="/checkout">
-            <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-xl font-medium flex items-center justify-center gap-2 mb-4" onClick={() => proceedToCheckout()}>
-              Proceed to Checkout
-              <ArrowRight className="h-5 w-5" />
-            </button>
+              <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-xl font-medium flex items-center justify-center gap-2 mb-4" onClick={() => proceedToCheckout()}>
+                Proceed to Checkout
+                <ArrowRight className="h-5 w-5" />
+              </button>
             </Link>
 
             <Link to="/products">

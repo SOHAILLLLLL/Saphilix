@@ -7,7 +7,6 @@ const { v4: uuidv4 } = require('uuid'); // npm install uuid
 async function getOrCreateCart(req, res, next) {
     let cartId = req.cookies.cart_id;
     let cart;
-
     try {
         if (req.user) { // Assuming req.user is populated after authentication
             cart = await Cart.findOne({ userId: req.user._id });
@@ -145,8 +144,9 @@ router.patch('/update-quantity/:productId', getOrCreateCart, async (req, res) =>
   const { productId } = req.params;
   const { newQuantity } = req.body;
   const cart = req.cart; // Cart retrieved by getOrCreateCart middleware
-
+  console.log(productId,newQuantity);
   if (!cart) {
+    console.log("hello")
     return res.status(404).json({ message: 'Cart not found.' }); // Should not happen
   }
 

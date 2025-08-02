@@ -190,7 +190,7 @@ const SaphilixProductsPage = (props) => {
   const [modalProduct, setModalProduct] = useState(null);
   //checjed
   useEffect(() => {
-    axios.get('http://10.98.119.194:8000/data/products')
+    axios.get(process.env.REACT_APP_API_URL+'/data/products')
       .then(res => {
         setProducts(res.data); // if your backend sends { products: [...] }
       })

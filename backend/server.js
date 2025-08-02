@@ -15,7 +15,7 @@ const app = express();
 app.use(cookieParser()); // <--- USE IT HERE, BEFORE YOUR ROUTES
 
 app.use(cors(
-    {origin: "http://10.98.119.194:3000",  // your React frontend
+    {origin: "http://localhost:3000",  // your React frontend
     credentials: true   // allow session cookies from frontend
     }
 ));

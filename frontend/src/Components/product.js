@@ -48,7 +48,7 @@ export default function ProductPage(props) {
     setError(null);
 
     // Using the correct IP address for mobile access
-    axios.get(`http://10.98.119.194:8000/data/pro/name/${encodeURIComponent(name)}`)
+    axios.get(`${process.env.REACT_APP_API_URL}/data/pro/name/${encodeURIComponent(name)}`)
       .then(res => {
         // Ensure photos array is not empty
         // if (res.data && res.data.photos && res.data.photos.length > 0) {

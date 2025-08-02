@@ -34,7 +34,7 @@ const ShoppingCartCheckout = () => {
             setMessage(null); // Clear any previous messages
             setMessageType(null);
             try {
-                const response = await fetch("http://10.98.119.194:8000" + "/validateData/validate", {
+                const response = await fetch(process.env.REACT_APP_API_URL + "/validateData/validate", {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
